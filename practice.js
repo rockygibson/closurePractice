@@ -9,11 +9,11 @@ var outer = function(){
 //Above you're given a function that returns another function which has a closure over the name variable.
 //Invoke outer saving the return value into another variable called 'inner'.
 
-  //Code Here
+  var inner = outer();
 
 //Once you do that, invoke inner.
 
-  //Code Here
+  inner();
 
 
 
@@ -21,10 +21,9 @@ var outer = function(){
 
 
 
-var callFriend = function(){
-  var friend = 'Jake';
+var callFriend = function(name){
   function callF(number){
-    return 'Calling ' + friend + ' at ' + number;
+    return 'Calling ' + name + ' at ' + number;
   }
   return callF;
 };
@@ -32,7 +31,8 @@ var callFriend = function(){
 //Above you're given a callFriend function that returns another function.
 //Do what you need to do in order to call your function and get 'Calling Jake at 435-215-9248' in your console.
 
-  //Code Here
+  var callF = callFriend('Jake');
+  callF('435-215-9248');
 
 
 
@@ -44,8 +44,13 @@ var callFriend = function(){
   Write a function called makeCounter that makes the following code work properly.
 */
 
-  //Code Here
-  var count = makeCounter();
+  var makeCounter = function(num){
+    return function(){
+      num++;
+      return num;
+    }
+  };
+  var count = makeCounter(0);
   count() // 1
   count() // 2
   count() // 3
@@ -60,10 +65,27 @@ var callFriend = function(){
 /*
   Write a function that accepts another function as it's only argument and returns a new function
   (which invokes the original function that was passed in) that can only ever be executed once.
-  Once completed, add a second arguments that allows the function to be invoked N number of times.
+  Once completed, add a second argument that allows the function to be invoked N number of times.
   After the function has been called N number of times, console.log('STAHHP');
 */
 
+var fn = function(inner, count) {
+  return function(){
+    if(count > 0) {
+      inner();
+      count --;
+    } else {
+      console.log("STAHHP");
+    }
+  }
+};
+
+var inner = function() {
+  console.log("ran")
+};
+
+var ran = fn(inner, 4);
+ran();
 
 
 
